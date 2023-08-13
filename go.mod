@@ -1,3 +1,3 @@
-module gotmpl
+module gopomobeat
 
 go 1.20

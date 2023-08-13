@@ -1,9 +1,9 @@
-package main
+package gopomobeat
 
 import (
 	"fmt"
 )
 
-func main() {
+func Ok() {
 	fmt.Println("ok")
 }
