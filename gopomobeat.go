@@ -5,24 +5,24 @@ import (
 	"time"
 )
 
-type Event int8
+type EventType int8
 
 const (
-	WorkTime Event = iota
+	WorkTime EventType = iota
 	ShortBreak
 	LongBreak
 )
 
 type Pomobeat struct {
 	time   time.Time
-	events []Event
-	config map[Event]int64
+	events []EventType
+	config map[EventType]int64
 }
 
 func NewPomobeat() *Pomobeat {
 	return &Pomobeat{
 		time: time.Now(),
-		events: []Event{
+		events: []EventType{
 			WorkTime,
 			ShortBreak,
 			WorkTime,
@@ -32,7 +32,7 @@ func NewPomobeat() *Pomobeat {
 			WorkTime,
 			LongBreak,
 		},
-		config: map[Event]int64{
+		config: map[EventType]int64{
 			WorkTime:   540,
 			ShortBreak: 60,
 			LongBreak:  360,
@@ -65,7 +65,7 @@ func (p Pomobeat) GetEvent() int {
 
 	seconds := int64(0)
 	var i int
-	var event Event
+	var event EventType
 	for i, event = range p.events {
 		seconds += p.config[event]
 
