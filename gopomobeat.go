@@ -44,6 +44,22 @@ func (p Pomobeat) GetCalender() string {
 	return fmt.Sprintf("#%d-%d", p.GetSets(), p.GetEvent())
 }
 
+func (p Pomobeat) GetDurationUntilNextEvent() time.Duration {
+	e := p.GetEvent()
+	t := p.time.Unix() % p.GetSetSeconds()
+
+	seconds := int64(0)
+	for i, event := range p.events {
+		if i > e {
+			break
+		}
+
+		seconds += p.config[event]
+	}
+
+	return time.Duration(seconds-int64(t)) * time.Second
+}
+
 func (p Pomobeat) GetEvent() int {
 	t := p.time.Unix() % p.GetSetSeconds()
 
@@ -80,4 +96,8 @@ func (p Pomobeat) GetTime() time.Time {
 
 func (p *Pomobeat) SetTime(t time.Time) {
 	p.time = t
+}
+
+func (p Pomobeat) WaitForNextEvent() {
+	time.Sleep(p.GetDurationUntilNextEvent())
 }
