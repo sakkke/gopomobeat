@@ -1,4 +1,4 @@
-module gopomobeat
+module github.com/sakkke/gopomobeat
 
 go 1.20
 
