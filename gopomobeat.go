@@ -6,6 +6,8 @@ import (
 )
 
 type EventType int8
+type EventListener func(p Pomobeat)
+type EventID int
 
 const (
 	WorkTime EventType = iota
@@ -14,13 +16,15 @@ const (
 )
 
 type Pomobeat struct {
-	time   time.Time
-	events []EventType
-	config map[EventType]int64
+	time      time.Time
+	events    []EventType
+	config    map[EventType]int64
+	listeners map[EventType]map[EventID]EventListener
+	nextID    EventID
 }
 
 func NewPomobeat() *Pomobeat {
-	return &Pomobeat{
+	pomobeat := &Pomobeat{
 		time: time.Now(),
 		events: []EventType{
 			WorkTime,
@@ -37,7 +41,21 @@ func NewPomobeat() *Pomobeat {
 			ShortBreak: 60,
 			LongBreak:  360,
 		},
+		listeners: map[EventType]map[EventID]EventListener{},
+		nextID:    0,
 	}
+
+	for _, event := range pomobeat.events {
+		pomobeat.listeners[event] = map[EventID]EventListener{}
+	}
+
+	return pomobeat
+}
+
+func (p *Pomobeat) AddEventListener(e EventType, listener EventListener) EventID {
+	p.nextID++
+	p.listeners[e][p.nextID] = listener
+	return p.nextID
 }
 
 func (p Pomobeat) GetCalender() string {
@@ -77,6 +95,23 @@ func (p Pomobeat) GetEvent() int {
 	return i
 }
 
+func (p Pomobeat) GetEventType() EventType {
+	return p.events[p.GetEvent()-1]
+}
+
+func (p Pomobeat) GetEventListeners(e EventType) map[EventID]EventListener {
+	return p.listeners[e]
+}
+
+func (p Pomobeat) GetNextEventType() EventType {
+	event := p.GetEvent()
+	if event == len(p.events) {
+		event = 0
+	}
+
+	return p.events[event]
+}
+
 func (p Pomobeat) GetSetSeconds() int64 {
 	seconds := int64(0)
 	for _, event := range p.events {
@@ -94,8 +129,40 @@ func (p Pomobeat) GetTime() time.Time {
 	return p.time
 }
 
+func (p Pomobeat) Listen() {
+	for {
+		p.WaitForNextEvent()
+		eventType := p.GetNextEventType()
+		p.Sync()
+		p.NotifyEventListeners(eventType)
+	}
+}
+
+func (p Pomobeat) NotifyEventListeners(e EventType) {
+	for _, listener := range p.listeners[e] {
+		listener(p)
+	}
+}
+
+func (p *Pomobeat) RemoveEventListener(e EventType, TargetID EventID) {
+	listeners := map[EventID]EventListener{}
+	for id, listener := range p.listeners[e] {
+		if id == TargetID {
+			continue
+		}
+
+		listeners[id] = listener
+	}
+
+	p.listeners[e] = listeners
+}
+
 func (p *Pomobeat) SetTime(t time.Time) {
 	p.time = t
+}
+
+func (p *Pomobeat) Sync() {
+	p.SetTime(time.Now())
 }
 
 func (p Pomobeat) WaitForNextEvent() {
