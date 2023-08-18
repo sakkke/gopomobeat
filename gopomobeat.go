@@ -95,7 +95,7 @@ func (p Pomobeat) GetEvent() int {
 	for i, event = range p.events {
 		seconds += p.config[event]
 
-		if seconds >= t {
+		if seconds > t {
 			break
 		}
 	}
