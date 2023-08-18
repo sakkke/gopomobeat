@@ -67,12 +67,16 @@ func (p Pomobeat) GetDurationUntilNextEvent() time.Duration {
 	t := p.time.Unix() % p.GetSetSeconds()
 
 	seconds := int64(0)
-	for i, event := range p.events {
-		if i > e {
-			break
-		}
+	if t < p.config[p.events[0]] {
+		seconds = p.config[p.events[0]]
+	} else {
+		for i, event := range p.events {
+			if i > e {
+				break
+			}
 
-		seconds += p.config[event]
+			seconds += p.config[event]
+		}
 	}
 
 	return time.Duration(seconds-int64(t)) * time.Second
