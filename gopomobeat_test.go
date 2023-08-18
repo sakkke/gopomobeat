@@ -126,10 +126,10 @@ func TestGetEventType(t *testing.T) {
 	assert.Equal(t, WorkTime, pomobeat.GetEventType())
 
 	pomobeat.SetTime(time.Unix(1692198540, 0))
-	assert.Equal(t, LongBreak, pomobeat.GetEventType())
+	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
 
 	pomobeat.SetTime(time.Unix(1692198599, 0))
-	assert.Equal(t, LongBreak, pomobeat.GetEventType())
+	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
 
 	pomobeat.SetTime(time.Unix(1692198600, 0))
 	assert.Equal(t, WorkTime, pomobeat.GetEventType())
@@ -162,10 +162,10 @@ func TestGetEventType(t *testing.T) {
 	assert.Equal(t, WorkTime, pomobeat.GetEventType())
 
 	pomobeat.SetTime(time.Unix(1692200340, 0))
-	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
+	assert.Equal(t, LongBreak, pomobeat.GetEventType())
 
 	pomobeat.SetTime(time.Unix(1692200699, 0))
-	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
+	assert.Equal(t, LongBreak, pomobeat.GetEventType())
 
 	pomobeat.SetTime(time.Unix(1692200700, 0))
 	assert.Equal(t, WorkTime, pomobeat.GetEventType())
