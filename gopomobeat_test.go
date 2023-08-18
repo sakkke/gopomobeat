@@ -37,8 +37,12 @@ func TestGetDurationUntilNextEvent(t *testing.T) {
 
 func TestGetEvent(t *testing.T) {
 	pomobeat := NewPomobeat()
+
 	pomobeat.SetTime(time.Unix(1692070515, 0))
 	assert.Equal(t, 6, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692195772, 0))
+	assert.Equal(t, 8, pomobeat.GetEvent())
 }
 
 func TestGetEventListeners(t *testing.T) {
@@ -50,8 +54,12 @@ func TestGetEventListeners(t *testing.T) {
 
 func TestGetEventType(t *testing.T) {
 	pomobeat := NewPomobeat()
+
 	pomobeat.SetTime(time.Unix(1692070515, 0))
 	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692195772, 0))
+	assert.Equal(t, LongBreak, pomobeat.GetEventType())
 }
 
 func TestGetNextEventType(t *testing.T) {
