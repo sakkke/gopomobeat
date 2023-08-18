@@ -47,6 +47,60 @@ func TestGetEvent(t *testing.T) {
 
 	pomobeat.SetTime(time.Unix(1692195772, 0))
 	assert.Equal(t, 8, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692198000, 0))
+	assert.Equal(t, 8, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692198539, 0))
+	assert.Equal(t, 8, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692198540, 0))
+	assert.Equal(t, 1, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692198599, 0))
+	assert.Equal(t, 1, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692198600, 0))
+	assert.Equal(t, 2, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692199139, 0))
+	assert.Equal(t, 2, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692199140, 0))
+	assert.Equal(t, 3, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692199199, 0))
+	assert.Equal(t, 3, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692199200, 0))
+	assert.Equal(t, 4, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692199739, 0))
+	assert.Equal(t, 4, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692199740, 0))
+	assert.Equal(t, 5, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692199799, 0))
+	assert.Equal(t, 5, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692199800, 0))
+	assert.Equal(t, 6, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692200339, 0))
+	assert.Equal(t, 6, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692200340, 0))
+	assert.Equal(t, 7, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692200699, 0))
+	assert.Equal(t, 7, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692200700, 0))
+	assert.Equal(t, 8, pomobeat.GetEvent())
+
+	pomobeat.SetTime(time.Unix(1692201059, 0))
+	assert.Equal(t, 8, pomobeat.GetEvent())
 }
 
 func TestGetEventListeners(t *testing.T) {
