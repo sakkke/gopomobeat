@@ -114,10 +114,64 @@ func TestGetEventType(t *testing.T) {
 	pomobeat := NewPomobeat()
 
 	pomobeat.SetTime(time.Unix(1692070515, 0))
-	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
 
 	pomobeat.SetTime(time.Unix(1692195772, 0))
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692198000, 0))
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692198539, 0))
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692198540, 0))
 	assert.Equal(t, LongBreak, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692198599, 0))
+	assert.Equal(t, LongBreak, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692198600, 0))
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692199139, 0))
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692199140, 0))
+	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692199199, 0))
+	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692199200, 0))
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692199739, 0))
+	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692199740, 0))
+	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692199799, 0))
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692199800, 0))
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692200339, 0))
+	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692200340, 0))
+	assert.Equal(t, ShortBreak, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692200699, 0))
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692200700, 0))
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
+
+	pomobeat.SetTime(time.Unix(1692201059, 0))
+	assert.Equal(t, WorkTime, pomobeat.GetEventType())
 }
 
 func TestGetNextEventType(t *testing.T) {

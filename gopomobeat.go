@@ -104,7 +104,12 @@ func (p Pomobeat) GetEvent() int {
 }
 
 func (p Pomobeat) GetEventType() EventType {
-	return p.events[p.GetEvent()-1]
+	event := p.GetEvent() - 1
+	if event == 0 {
+		event = len(p.events)
+	}
+
+	return p.events[event-1]
 }
 
 func (p Pomobeat) GetEventListeners(e EventType) map[EventID]EventListener {
