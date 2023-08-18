@@ -31,8 +31,12 @@ func TestGetCalender(t *testing.T) {
 
 func TestGetDurationUntilNextEvent(t *testing.T) {
 	pomobeat := NewPomobeat()
+
 	pomobeat.SetTime(time.Unix(1692070515, 0))
 	assert.Equal(t, 225*time.Second, pomobeat.GetDurationUntilNextEvent())
+
+	pomobeat.SetTime(time.Unix(1692195772, 0))
+	assert.Equal(t, 68*time.Second, pomobeat.GetDurationUntilNextEvent())
 }
 
 func TestGetEvent(t *testing.T) {
